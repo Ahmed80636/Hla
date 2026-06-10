@@ -4,88 +4,84 @@
     <meta charset="UTF-8">
     <title>Für Hla</title>
     <style>
-        body {
+        body, html {
             margin: 0;
-            background: radial-gradient(circle at center, #330000 0%, #000000 100%);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 0;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
-            color: white;
-            font-family: 'Playfair Display', serif;
+            /* Hintergrund-Kachel-Muster */
+            background-color: #2a0000;
+            background-image: radial-gradient(circle, #550000 1px, transparent 1px);
+            background-size: 50px 50px;
         }
 
-        .hero {
+        /* Der vollflächige Blumen-Container */
+        .full-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: center;
+            font-size: 40px;
+            z-index: 1;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .center-box {
             position: relative;
             z-index: 10;
             text-align: center;
-            perspective: 1000px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 50px;
+            border-radius: 20px;
+            border: 5px solid #ff0000;
+            box-shadow: 0 0 50px #ff0000;
         }
 
-        h1 {
-            font-size: 5rem;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            color: #fff;
-            text-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000;
-            animation: pulse 2s infinite;
-        }
-
-        .arabic {
-            font-size: 4rem;
-            color: #ff4d4d;
-            margin-top: 20px;
-            text-shadow: 0 0 15px #ff4d4d;
-        }
-
-        .name { font-size: 2rem; opacity: 0.8; letter-spacing: 10px; }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
+        h1 { font-size: 6rem; color: #ffcccc; margin: 0; text-shadow: 0 0 20px red; }
+        .arabic { font-size: 5rem; color: #ff0000; text-shadow: 0 0 10px white; }
 
         .particle {
             position: absolute;
-            pointer-events: none;
-            font-size: 2rem;
-            animation: explode 4s ease-out infinite;
+            font-size: 3rem;
+            animation: fly 2s linear infinite;
         }
 
-        @keyframes explode {
-            0% { transform: translate(0,0) rotate(0deg); opacity: 1; }
-            100% { transform: translate(var(--dx), var(--dy)) rotate(360deg); opacity: 0; }
+        @keyframes fly {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-10vh) rotate(360deg); }
         }
     </style>
 </head>
 <body>
 
-    <div class="hero">
-        <div class="name">HLA</div>
+    <!-- Der Hintergrund ist jetzt voll mit Blumen -->
+    <div class="full-bg">
+        <script>
+            for(let i=0; i<200; i++) document.write("🌹❤️");
+        </script>
+    </div>
+
+    <div class="center-box">
         <h1>I LOVE YOU</h1>
         <div class="arabic">أنا بحبك</div>
+        <h2 style="color:white">Hla</h2>
     </div>
 
     <script>
-        function createParticle() {
+        function spawn() {
             const p = document.createElement('div');
             p.className = 'particle';
-            p.innerHTML = Math.random() > 0.5 ? '❤️' : '🌹';
-            
-            // Zufällige Flugrichtung
-            const dx = (Math.random() - 0.5) * 1000;
-            const dy = (Math.random() - 0.5) * 1000;
-            p.style.setProperty('--dx', dx + 'px');
-            p.style.setProperty('--dy', dy + 'px');
-            
-            p.style.left = '50vw';
-            p.style.top = '50vh';
+            p.innerHTML = Math.random() > 0.5 ? '🌹' : '❤️';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDuration = Math.random() * 2 + 1 + 's';
             document.body.appendChild(p);
-            setTimeout(() => p.remove(), 4000);
+            setTimeout(() => p.remove(), 3000);
         }
-        setInterval(createParticle, 100);
+        setInterval(spawn, 50); // Extrem hohe Frequenz
     </script>
 </body>
 </html>
