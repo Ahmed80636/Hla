@@ -2,74 +2,90 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <title>Für Hla</title>
     <style>
         body {
             margin: 0;
+            background: radial-gradient(circle at center, #330000 0%, #000000 100%);
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: radial-gradient(circle, #4a0000, #000000);
-            font-family: 'Segoe UI', sans-serif;
             overflow: hidden;
             color: white;
-            text-align: center;
+            font-family: 'Playfair Display', serif;
         }
 
-        .card {
-            padding: 40px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+        .hero {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            perspective: 1000px;
         }
 
         h1 {
-            font-size: 3rem;
+            font-size: 5rem;
             margin: 0;
-            text-shadow: 0 0 20px #ff0000;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: #fff;
+            text-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000;
+            animation: pulse 2s infinite;
         }
 
         .arabic {
-            font-size: 2.5rem;
-            margin-top: 10px;
-            color: #ffcccc;
+            font-size: 4rem;
+            color: #ff4d4d;
+            margin-top: 20px;
+            text-shadow: 0 0 15px #ff4d4d;
         }
 
-        /* Animation für die Herzen */
-        .heart {
+        .name { font-size: 2rem; opacity: 0.8; letter-spacing: 10px; }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .particle {
             position: absolute;
-            font-size: 20px;
-            animation: float 4s linear infinite;
+            pointer-events: none;
+            font-size: 2rem;
+            animation: explode 4s ease-out infinite;
         }
 
-        @keyframes float {
-            0% { transform: translateY(100vh) scale(0); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(2); opacity: 0; }
+        @keyframes explode {
+            0% { transform: translate(0,0) rotate(0deg); opacity: 1; }
+            100% { transform: translate(var(--dx), var(--dy)) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>I Love You</h1>
+    <div class="hero">
+        <div class="name">HLA</div>
+        <h1>I LOVE YOU</h1>
         <div class="arabic">أنا بحبك</div>
-        <p>Hla</p>
-        <p>🌹🌹🌹</p>
     </div>
 
     <script>
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'heart';
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
+        function createParticle() {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.innerHTML = Math.random() > 0.5 ? '❤️' : '🌹';
+            
+            // Zufällige Flugrichtung
+            const dx = (Math.random() - 0.5) * 1000;
+            const dy = (Math.random() - 0.5) * 1000;
+            p.style.setProperty('--dx', dx + 'px');
+            p.style.setProperty('--dy', dy + 'px');
+            
+            p.style.left = '50vw';
+            p.style.top = '50vh';
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 4000);
         }
-        setInterval(createHeart, 300);
+        setInterval(createParticle, 100);
     </script>
 </body>
 </html>
